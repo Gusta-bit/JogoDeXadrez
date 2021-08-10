@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31402.337
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xadrez-console", "xadrez-console\xadrez-console.csproj", "{83EB85F1-97AC-42B7-AC7A-E37F8A3955A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83EB85F1-97AC-42B7-AC7A-E37F8A3955A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83EB85F1-97AC-42B7-AC7A-E37F8A3955A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83EB85F1-97AC-42B7-AC7A-E37F8A3955A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83EB85F1-97AC-42B7-AC7A-E37F8A3955A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1DA69F4-D000-4A6F-A5DF-D9BADE5F1480}
+	EndGlobalSection
+EndGlobal
