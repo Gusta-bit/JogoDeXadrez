@@ -43,5 +43,10 @@ namespace tabuleiro
         {
             qteMovimentos++;
         }
+
+        public void decrementarQteMovimentos()
+        {
+            qteMovimentos--;
+        }
     }
 }
