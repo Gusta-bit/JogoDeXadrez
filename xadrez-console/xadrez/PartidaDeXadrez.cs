@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using tabuleiro;
 
 
@@ -10,7 +11,7 @@ namespace xadrez
         public int turno { get; private set; }
         public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
-        private HashSet<Peca>pecas;
+        private HashSet<Peca> pecas;
         private HashSet<Peca> capturadas;
         public bool xeque { get; private set; }
         public Peao vulneravelEnPassant { get; private set; }
@@ -27,9 +28,9 @@ namespace xadrez
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
             colocarPecas();
-        }  
+        }
 
-        public void colocarNovaPeca(char coluna, int linha,Peca peca)
+        public void colocarNovaPeca(char coluna, int linha, Peca peca)
         {
             tab.colocarPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
             pecas.Add(peca);
@@ -103,7 +104,7 @@ namespace xadrez
             }
 
             //#jogadaespecial roque grande
-            if (p is Rei & destino.coluna == origem.coluna -2 )
+            if (p is Rei & destino.coluna == origem.coluna - 2)
             {
                 Posicao origemT = new Posicao(origem.linha, origem.coluna - 4);
                 Posicao destinoT = new Posicao(origem.linha, origem.coluna - 1);
@@ -113,7 +114,7 @@ namespace xadrez
             }
 
             //#jogadaespecial en passant
-            if ( p is Peao)
+            if (p is Peao)
             {
                 if (origem.coluna != destino.coluna && pecaCapturada == vulneravelEnPassant)
                 {
@@ -132,29 +133,45 @@ namespace xadrez
             }
         }
 
-        public void realizaJogada (Posicao origem, Posicao destino)
+        public void realizaJogada(Posicao origem, Posicao destino)
         {
             Peca pecaCapturada = executaMovimento(origem, destino);
-            
+
             if (estaEmXeque(jogadorAtual))
             {
-                desfazMovimento(origem, destino,pecaCapturada);
+                desfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroExeption("Você não pode se colocar em xeque!");
             }
 
             Peca p = tab.peca(destino);
 
+
+
+
             //#jogadaespecial promocao
             if (p is Peao)
             {
-                if ((p.cor == Cor.Branca && destino.linha == 0) || (p.cor == Cor.Preta && destino.linha == 7)) {
-                    p = tab.retirarPeca(destino);
-                    pecas.Remove(p);
-                    Peca dama = new Dama(tab, p.cor);
-                    tab.colocarPeca(dama, destino);
-                    pecas.Add(dama);
+                if ((p.cor == Cor.Branca && destino.linha == 0) || (p.cor == Cor.Preta && destino.linha == 7))
+                {
+
+                    Console.WriteLine("Digite qual a primeira letra da peça que deseja: ");
+                    char escolha = char.Parse(Console.ReadLine());
+
+                  
+                   
+                   
+                        pecaPromocao(escolha, p, destino);
+                   
+
                 }
+                         
+               
+
             }
+
+
+
+
             if (estaEmXeque(adversaria(jogadorAtual)))
             {
                 xeque = true;
@@ -202,6 +219,68 @@ namespace xadrez
             }
         }
 
+        public void pecaPromocao(char escolha, Peca p, Posicao destino)
+        {
+            while ((escolha != 'd') && (escolha != 'b') && (escolha != 't') && (escolha != 'c')) 
+            {
+
+
+           
+
+
+
+
+            if (escolha == 'd')
+                {
+                    p = tab.retirarPeca(destino);
+                    pecas.Remove(p);
+                    Peca dama = new Dama(tab, p.cor);
+                    tab.colocarPeca(dama, destino);
+                    pecas.Add(dama);
+
+                }
+                else if (escolha == 'b')
+
+                {
+                    p = tab.retirarPeca(destino);
+                    pecas.Remove(p);
+                    Peca bispo = new Bispo(tab, p.cor);
+                    tab.colocarPeca(bispo, destino);
+                    pecas.Add(bispo);
+
+                }
+                else if (escolha == 'c')
+
+                {
+                    p = tab.retirarPeca(destino);
+                    pecas.Remove(p);
+                    Peca cavalo = new Cavalo(tab, p.cor);
+                    tab.colocarPeca(cavalo, destino);
+                    pecas.Add(cavalo);
+
+                }
+                else if (escolha == 't')
+
+                {
+                    p = tab.retirarPeca(destino);
+                    pecas.Remove(p);
+                    Peca torre = new Torre(tab, p.cor);
+                    tab.colocarPeca(torre, destino);
+                    pecas.Add(torre);
+
+                }
+
+                Console.WriteLine("Digite uma letra valida");
+
+                escolha = char.Parse(Console.ReadLine());
+            }
+
+
+
+
+
+
+        }
         
         public void validarPosicaoDeDestino(Posicao origem, Posicao destino)
         {
